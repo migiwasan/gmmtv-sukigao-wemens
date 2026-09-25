@@ -1854,12 +1854,12 @@ function showResult() {
     ) {
 
       refineButton.textContent =
-        "TOP9をもっと厳密にする（＋30回）";
+        "TOP9をもっと厳密にする（＋20回）";
 
     } else {
 
       refineButton.textContent =
-        "さらに＋30回比較する";
+        "さらに＋20回比較する";
 
     }
 
