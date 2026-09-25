@@ -7,8 +7,8 @@
 // 設定
 // ========================================
 
-const BASE_COMPARISONS = 100;
-const REFINE_COMPARISONS = 30;
+const BASE_COMPARISONS = 80;
+const REFINE_COMPARISONS = 20;
 
 const PHASE2_CANDIDATES = 20;
 const REFINE_CANDIDATES = 15;
