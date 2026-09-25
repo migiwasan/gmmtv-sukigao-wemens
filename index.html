@@ -7,7 +7,7 @@
 
   <title>GMMTV好き顔ソート~women's~</title>
 
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -46,17 +46,27 @@
       <div class="faces">
 
         <!-- 左 -->
-        <button
-          class="face-card"
-          id="leftButton"
-          type="button"
-        >
-          <img
-            id="leftImage"
-            src=""
-            alt=""
+        <div class="face-wrapper">
+
+          <button
+            class="face-card"
+            id="leftButton"
+            type="button"
           >
-        </button>
+            <img
+              id="leftImage"
+              src=""
+              alt=""
+            >
+          </button>
+
+          <!-- ★ 左の名前 -->
+          <div
+            id="leftName"
+            class="face-name"
+          ></div>
+
+        </div>
 
 
         <!-- VS -->
@@ -66,17 +76,27 @@
 
 
         <!-- 右 -->
-        <button
-          class="face-card"
-          id="rightButton"
-          type="button"
-        >
-          <img
-            id="rightImage"
-            src=""
-            alt=""
+        <div class="face-wrapper">
+
+          <button
+            class="face-card"
+            id="rightButton"
+            type="button"
           >
-        </button>
+            <img
+              id="rightImage"
+              src=""
+              alt=""
+            >
+          </button>
+
+          <!-- ★ 右の名前 -->
+          <div
+            id="rightName"
+            class="face-name"
+          ></div>
+
+        </div>
 
       </div>
 
@@ -185,7 +205,7 @@
        JavaScript
   ============================== -->
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 
 </body>
 
