@@ -89,6 +89,23 @@ const rightImage =
   );
 
 
+// ★★★ 追加：名前表示用 ★★★
+
+const leftName =
+  document.getElementById(
+    "leftName"
+  );
+
+const rightName =
+  document.getElementById(
+    "rightName"
+  );
+
+
+// ========================================
+// その他HTML要素
+// ========================================
+
 const progressBar =
   document.getElementById(
     "progressBar"
@@ -1175,6 +1192,41 @@ function setFaceImage(
 
 
 // ========================================
+// ★★★ 写真＋名前を表示 ★★★
+// ========================================
+
+function setFace(
+  imageElement,
+  nameElement,
+  person
+) {
+
+  if (!person) {
+
+    return;
+
+  }
+
+
+  // 写真
+  setFaceImage(
+    imageElement,
+    person
+  );
+
+
+  // 名前
+  if (nameElement) {
+
+    nameElement.textContent =
+      person.name;
+
+  }
+
+}
+
+
+// ========================================
 // プログレス
 // ========================================
 
@@ -1317,14 +1369,18 @@ function showNextComparison() {
     pair;
 
 
-  setFaceImage(
+  // ★★★ 写真＋名前を同時に表示 ★★★
+
+  setFace(
     leftImage,
+    leftName,
     pair[0]
   );
 
 
-  setFaceImage(
+  setFace(
     rightImage,
+    rightName,
     pair[1]
   );
 
@@ -1411,7 +1467,6 @@ function undoLastChoice() {
   }
 
 
-  // スコア復元
   scores =
     JSON.parse(
       JSON.stringify(
@@ -1420,7 +1475,6 @@ function undoLastChoice() {
     );
 
 
-  // 比較回数復元
   comparisonCounts =
     JSON.parse(
       JSON.stringify(
@@ -1429,7 +1483,6 @@ function undoLastChoice() {
     );
 
 
-  // ペア履歴復元
   comparisonHistory =
     JSON.parse(
       JSON.stringify(
@@ -1438,12 +1491,10 @@ function undoLastChoice() {
     );
 
 
-  // 比較回数復元
   currentComparison =
     undoState.currentComparison;
 
 
-  // モード復元
   mode =
     undoState.mode;
 
@@ -1456,7 +1507,6 @@ function undoLastChoice() {
     undoState.refinementTarget;
 
 
-  // 比較対象復元
   if (
     undoState.currentPair
   ) {
@@ -1480,19 +1530,16 @@ function undoLastChoice() {
   }
 
 
-  // さらに戻ることはできない
   undoState =
     null;
 
 
-  // 保存
   saveState();
 
 
   updateUndoButton();
 
 
-  // 比較画面表示
   if (compareScreen) {
 
     compareScreen.style.display =
@@ -1509,17 +1556,20 @@ function undoLastChoice() {
   }
 
 
-  // 前の比較を表示
+  // ★★★ 写真＋名前を復元 ★★★
+
   if (currentPair) {
 
-    setFaceImage(
+    setFace(
       leftImage,
+      leftName,
       currentPair[0]
     );
 
 
-    setFaceImage(
+    setFace(
       rightImage,
+      rightName,
       currentPair[1]
     );
 
@@ -1569,13 +1619,6 @@ function handleChoice(
   }
 
 
-  /*
-   * ★重要
-   *
-   * 選択を反映する前に
-   * 現在の状態を保存する
-   */
-
   saveUndoState();
 
 
@@ -1583,21 +1626,17 @@ function handleChoice(
     true;
 
 
-  // スコア更新
   applyChoice(
     choice
   );
 
 
-  // 比較記録
   recordComparison();
 
 
-  // 比較回数
   currentComparison++;
 
 
-  // 保存
   saveState();
 
 
@@ -1608,7 +1647,6 @@ function handleChoice(
         false;
 
 
-      // 精密比較終了
       if (
         mode === "refine" &&
         currentComparison >=
@@ -1622,7 +1660,6 @@ function handleChoice(
       }
 
 
-      // 通常比較終了
       if (
         mode === "normal" &&
         currentComparison >=
@@ -1636,7 +1673,6 @@ function handleChoice(
       }
 
 
-      // 次の比較
       showNextComparison();
 
     },
@@ -1660,7 +1696,6 @@ function showResult() {
     null;
 
 
-  // 戻るボタン無効
   undoState =
     null;
 
@@ -1668,7 +1703,6 @@ function showResult() {
   updateUndoButton();
 
 
-  // 比較画面非表示
   if (compareScreen) {
 
     compareScreen.style.display =
@@ -1677,7 +1711,6 @@ function showResult() {
   }
 
 
-  // 結果画面表示
   if (resultScreen) {
 
     resultScreen.classList.remove(
@@ -1701,7 +1734,6 @@ function showResult() {
     );
 
 
-  // TOP9
   if (rankingGrid) {
 
     rankingGrid.innerHTML =
@@ -1729,7 +1761,6 @@ function showResult() {
             "ranking-card";
 
 
-          // 順位
           const rank =
             document.createElement(
               "div"
@@ -1744,7 +1775,6 @@ function showResult() {
             `${index + 1}位`;
 
 
-          // 画像
           const img =
             document.createElement(
               "img"
@@ -1761,7 +1791,6 @@ function showResult() {
             `${index + 1}位 ${person.name}`;
 
 
-          // 名前
           const name =
             document.createElement(
               "div"
@@ -1799,7 +1828,6 @@ function showResult() {
   }
 
 
-  // 説明
   const resultDescription =
     document.getElementById(
       "resultDescription"
@@ -1814,7 +1842,6 @@ function showResult() {
   }
 
 
-  // 精密比較
   if (refineButton) {
 
     refineButton.style.display =
@@ -1872,7 +1899,6 @@ function startRefinement() {
     REFINE_COMPARISONS;
 
 
-  // 結果画面を隠す
   if (resultScreen) {
 
     resultScreen.style.display =
@@ -1881,7 +1907,6 @@ function startRefinement() {
   }
 
 
-  // 比較画面を表示
   if (compareScreen) {
 
     compareScreen.style.display =
@@ -2260,7 +2285,6 @@ async function loadPeople() {
     }
 
 
-    // ID重複確認
     const ids =
       people.map(
         person =>
@@ -2284,7 +2308,6 @@ async function loadPeople() {
     }
 
 
-    // 必須項目
     for (
       const person of people
     ) {
@@ -2304,7 +2327,6 @@ async function loadPeople() {
     }
 
 
-    // IDから人物を取得
     peopleById =
       new Map(
         people.map(
@@ -2316,12 +2338,10 @@ async function loadPeople() {
       );
 
 
-    // 比較回数
     normalTarget =
       calculateNormalTarget();
 
 
-    // 保存データ
     const loaded =
       loadState();
 
